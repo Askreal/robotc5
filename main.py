@@ -1,8 +1,3 @@
-def Event(num):
-    if (num == 1):
-        pass
-    elif (num ==2):
-        pass
 def NLeft2():
     Forward()
     basic.pause(500)
@@ -40,6 +35,34 @@ def NLeft():
     basic.pause(1800)
     Stop()
     awry()
+def Activate(num: number):
+    if num == 1:
+        NLeft()
+        awry()
+    elif num == 2:
+        basic.show_icon(IconNames.HEART)
+    elif num == 3:
+        basic.show_icon(IconNames.HEART)
+    elif num == 4:
+        basic.show_icon(IconNames.HEART)
+    elif num == 5:
+        basic.show_icon(IconNames.HEART)
+    elif num == 6:
+        basic.show_icon(IconNames.HEART)
+    elif num == 7:
+        basic.show_icon(IconNames.HEART)
+    elif num == 8:
+        basic.show_icon(IconNames.HEART)
+    elif num == 9:
+        basic.show_icon(IconNames.HEART)
+    elif num == 10:
+        basic.show_icon(IconNames.HEART)
+    elif num == 11:
+        basic.show_icon(IconNames.HEART)
+    elif num == 12:
+        basic.show_icon(IconNames.HEART)
+    else:
+        basic.show_icon(IconNames.HEART)
 def awry():
     if pins.digital_read_pin(DigitalPin.P1) == 1 and pins.digital_read_pin(DigitalPin.P8) == 0:
         basic.show_icon(IconNames.ASLEEP)
@@ -70,6 +93,8 @@ def Driver():
     elif pins.digital_read_pin(DigitalPin.P1) == 1 and pins.digital_read_pin(DigitalPin.P8) == 1:
         Stop()
         basic.pause(1000)
+        event2 = event2 + 1
+        Activate(event2)
 
 def on_button_pressed_ab():
     awry()
@@ -88,9 +113,11 @@ def Stop():
 def Backward():
     pins.servo_write_pin(AnalogPin.P16, 0)
     pins.servo_write_pin(AnalogPin.P15, 180)
+    
+event = 0
 pins.digital_write_pin(DigitalPin.P15, 0)
 pins.digital_write_pin(DigitalPin.P16, 0)
 
 def on_forever():
-    pass
+    Driver()
 basic.forever(on_forever)

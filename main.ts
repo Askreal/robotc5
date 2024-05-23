@@ -46,29 +46,29 @@ function Activate (num: number) {
         NLeft()
         awry()
     } else if (num == 2) {
-    	
+        basic.showIcon(IconNames.Heart)
     } else if (num == 3) {
-    	
+        basic.showIcon(IconNames.Heart)
     } else if (num == 4) {
-    	
+        basic.showIcon(IconNames.Heart)
     } else if (num == 5) {
-    	
+        basic.showIcon(IconNames.Heart)
     } else if (num == 6) {
-    	
+        basic.showIcon(IconNames.Heart)
     } else if (num == 7) {
-    	
+        basic.showIcon(IconNames.Heart)
     } else if (num == 8) {
-    	
+        basic.showIcon(IconNames.Heart)
     } else if (num == 9) {
-    	
+        basic.showIcon(IconNames.Heart)
     } else if (num == 10) {
-    	
+        basic.showIcon(IconNames.Heart)
     } else if (num == 11) {
-    	
+        basic.showIcon(IconNames.Heart)
     } else if (num == 12) {
-    	
+        basic.showIcon(IconNames.Heart)
     } else {
-    	
+        basic.showIcon(IconNames.Heart)
     }
 }
 function awry () {
@@ -92,7 +92,8 @@ function awry () {
     return 0
 }
 function Driver () {
-    if (pins.digitalReadPin(DigitalPin.P1) == 0 && pins.digitalReadPin(DigitalPin.P8) == 0) {
+    let event2: number;
+if (pins.digitalReadPin(DigitalPin.P1) == 0 && pins.digitalReadPin(DigitalPin.P8) == 0) {
         Forward()
     } else if (pins.digitalReadPin(DigitalPin.P1) == 1 && pins.digitalReadPin(DigitalPin.P8) == 0) {
         Stop()
@@ -105,6 +106,8 @@ function Driver () {
     } else if (pins.digitalReadPin(DigitalPin.P1) == 1 && pins.digitalReadPin(DigitalPin.P8) == 1) {
         Stop()
         basic.pause(1000)
+        event2 = event2 + 1
+        Activate(event2)
     }
 }
 input.onButtonPressed(Button.AB, function () {
@@ -125,16 +128,9 @@ function Backward () {
     pins.servoWritePin(AnalogPin.P16, 0)
     pins.servoWritePin(AnalogPin.P15, 180)
 }
-function Event(num: any) {
-    if (num == 1) {
-        
-    } else if (num == 2) {
-        
-    }
-    
-}
+let event = 0
 pins.digitalWritePin(DigitalPin.P15, 0)
 pins.digitalWritePin(DigitalPin.P16, 0)
 basic.forever(function () {
-	
+    Driver()
 })
