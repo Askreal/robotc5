@@ -30,9 +30,6 @@ input.onButtonPressed(Button.A, function () {
     }
     Stop()
 })
-function event () {
-	
-}
 function NLeft () {
     Forward()
     basic.pause(1800)
@@ -44,6 +41,36 @@ function NLeft () {
     Stop()
     awry()
 }
+function Activate (num: number) {
+    if (num == 1) {
+        NLeft()
+        awry()
+    } else if (num == 2) {
+    	
+    } else if (num == 3) {
+    	
+    } else if (num == 4) {
+    	
+    } else if (num == 5) {
+    	
+    } else if (num == 6) {
+    	
+    } else if (num == 7) {
+    	
+    } else if (num == 8) {
+    	
+    } else if (num == 9) {
+    	
+    } else if (num == 10) {
+    	
+    } else if (num == 11) {
+    	
+    } else if (num == 12) {
+    	
+    } else {
+    	
+    }
+}
 function awry () {
     if (pins.digitalReadPin(DigitalPin.P1) == 1 && pins.digitalReadPin(DigitalPin.P8) == 0) {
         basic.showIcon(IconNames.Asleep)
@@ -51,6 +78,7 @@ function awry () {
             Left()
         }
         Stop()
+        basic.showIcon(IconNames.Duck)
         return 0
     } else if (pins.digitalReadPin(DigitalPin.P1) == 0 && pins.digitalReadPin(DigitalPin.P8) == 1) {
         basic.showIcon(IconNames.Butterfly)
@@ -58,6 +86,7 @@ function awry () {
             Right()
         }
         Stop()
+        basic.showIcon(IconNames.Duck)
         return 0
     }
     return 0
@@ -78,6 +107,9 @@ function Driver () {
         basic.pause(1000)
     }
 }
+input.onButtonPressed(Button.AB, function () {
+    awry()
+})
 input.onButtonPressed(Button.B, function () {
     NLeft()
 })
@@ -92,6 +124,14 @@ function Stop () {
 function Backward () {
     pins.servoWritePin(AnalogPin.P16, 0)
     pins.servoWritePin(AnalogPin.P15, 180)
+}
+function Event(num: any) {
+    if (num == 1) {
+        
+    } else if (num == 2) {
+        
+    }
+    
 }
 pins.digitalWritePin(DigitalPin.P15, 0)
 pins.digitalWritePin(DigitalPin.P16, 0)
