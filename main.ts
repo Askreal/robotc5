@@ -20,15 +20,23 @@ function Left () {
     pins.servoWritePin(AnalogPin.P16, 0)
     pins.servoWritePin(AnalogPin.P15, 0)
 }
+function shutdown_test () {
+    sensors.DDMmotor(
+    AnalogPin.P15,
+    0,
+    AnalogPin.P16,
+    0
+    )
+}
 function Forward () {
     pins.servoWritePin(AnalogPin.P15, 180)
     pins.servoWritePin(AnalogPin.P16, 0)
 }
 function UnCatch () {
-    pins.servoWritePin(AnalogPin.P14, 180)
+    pins.servoWritePin(AnalogPin.P14, 0)
 }
 input.onButtonPressed(Button.A, function () {
-	
+    Catch()
 })
 function NLeft () {
     Forward()
@@ -39,7 +47,15 @@ function NLeft () {
     Left()
     basic.pause(1800)
     Stop()
-    awry()
+}
+function ULeft () {
+    Catch()
+    basic.pause(1800)
+    Stop()
+    basic.pause(1800)
+    Left()
+    basic.pause(3600)
+    Stop()
 }
 function Activate (num: number) {
     if (num == 1) {
@@ -48,6 +64,9 @@ function Activate (num: number) {
         awry()
     } else if (num == 2) {
         basic.showNumber(num)
+        Catch_test()
+        ULeft()
+        awry()
     } else if (num == 3) {
         basic.showNumber(num)
     } else if (num == 4) {
@@ -72,14 +91,31 @@ function Activate (num: number) {
         basic.showNumber(num)
     }
 }
+function UnCatch_test () {
+    sensors.DDMmotor(
+    AnalogPin.P15,
+    1,
+    AnalogPin.P16,
+    255
+    )
+}
 function shutdown () {
     pins.servoWritePin(AnalogPin.P14, 90)
+}
+function Catch_test () {
+    sensors.DDMmotor(
+    AnalogPin.P15,
+    0,
+    AnalogPin.P16,
+    255
+    )
 }
 function awry () {
     if (pins.digitalReadPin(DigitalPin.P1) == 1 && pins.digitalReadPin(DigitalPin.P8) == 0) {
         basic.showIcon(IconNames.Asleep)
         while (pins.digitalReadPin(DigitalPin.P1) == 1 && pins.digitalReadPin(DigitalPin.P8) == 0) {
             Left()
+            basic.pause(200)
         }
         Stop()
         basic.showIcon(IconNames.Duck)
@@ -88,6 +124,7 @@ function awry () {
         basic.showIcon(IconNames.Butterfly)
         while (pins.digitalReadPin(DigitalPin.P1) == 0 && pins.digitalReadPin(DigitalPin.P8) == 1) {
             Right()
+            basic.pause(200)
         }
         Stop()
         basic.showIcon(IconNames.Duck)
@@ -114,10 +151,10 @@ function Driver () {
     }
 }
 input.onButtonPressed(Button.AB, function () {
-	
+    shutdown()
 })
 input.onButtonPressed(Button.B, function () {
-	
+    UnCatch()
 })
 function Right () {
     pins.servoWritePin(AnalogPin.P16, 180)
@@ -138,7 +175,7 @@ let event = 0
 event = 0
 pins.digitalWritePin(DigitalPin.P14, 0)
 pins.digitalWritePin(DigitalPin.P16, 0)
-pins.digitalWritePin(DigitalPin.P13, 0)
+pins.digitalWritePin(DigitalPin.P15, 0)
 basic.forever(function () {
-	
+    Driver()
 })
