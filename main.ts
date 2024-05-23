@@ -24,11 +24,11 @@ function Forward () {
     pins.servoWritePin(AnalogPin.P15, 180)
     pins.servoWritePin(AnalogPin.P16, 0)
 }
+function UnCatch () {
+    pins.servoWritePin(AnalogPin.P14, 180)
+}
 input.onButtonPressed(Button.A, function () {
-    while (pins.digitalReadPin(DigitalPin.P1) == 0 && pins.digitalReadPin(DigitalPin.P8) == 0) {
-        Forward()
-    }
-    Stop()
+	
 })
 function NLeft () {
     Forward()
@@ -43,33 +43,37 @@ function NLeft () {
 }
 function Activate (num: number) {
     if (num == 1) {
+        basic.showNumber(num)
         NLeft()
         awry()
     } else if (num == 2) {
-        basic.showIcon(IconNames.Heart)
+        basic.showNumber(num)
     } else if (num == 3) {
-        basic.showIcon(IconNames.Heart)
+        basic.showNumber(num)
     } else if (num == 4) {
-        basic.showIcon(IconNames.Heart)
+        basic.showNumber(num)
     } else if (num == 5) {
-        basic.showIcon(IconNames.Heart)
+        basic.showNumber(num)
     } else if (num == 6) {
-        basic.showIcon(IconNames.Heart)
+        basic.showNumber(num)
     } else if (num == 7) {
-        basic.showIcon(IconNames.Heart)
+        basic.showNumber(num)
     } else if (num == 8) {
-        basic.showIcon(IconNames.Heart)
+        basic.showNumber(num)
     } else if (num == 9) {
-        basic.showIcon(IconNames.Heart)
+        basic.showNumber(num)
     } else if (num == 10) {
-        basic.showIcon(IconNames.Heart)
+        basic.showNumber(num)
     } else if (num == 11) {
-        basic.showIcon(IconNames.Heart)
+        basic.showNumber(num)
     } else if (num == 12) {
-        basic.showIcon(IconNames.Heart)
+        basic.showNumber(num)
     } else {
-        basic.showIcon(IconNames.Heart)
+        basic.showNumber(num)
     }
+}
+function shutdown () {
+    pins.servoWritePin(AnalogPin.P14, 90)
 }
 function awry () {
     if (pins.digitalReadPin(DigitalPin.P1) == 1 && pins.digitalReadPin(DigitalPin.P8) == 0) {
@@ -92,8 +96,7 @@ function awry () {
     return 0
 }
 function Driver () {
-    let event2: number;
-if (pins.digitalReadPin(DigitalPin.P1) == 0 && pins.digitalReadPin(DigitalPin.P8) == 0) {
+    if (pins.digitalReadPin(DigitalPin.P1) == 0 && pins.digitalReadPin(DigitalPin.P8) == 0) {
         Forward()
     } else if (pins.digitalReadPin(DigitalPin.P1) == 1 && pins.digitalReadPin(DigitalPin.P8) == 0) {
         Stop()
@@ -106,19 +109,22 @@ if (pins.digitalReadPin(DigitalPin.P1) == 0 && pins.digitalReadPin(DigitalPin.P8
     } else if (pins.digitalReadPin(DigitalPin.P1) == 1 && pins.digitalReadPin(DigitalPin.P8) == 1) {
         Stop()
         basic.pause(1000)
-        event2 = event2 + 1
-        Activate(event2)
+        event = event + 1
+        Activate(event)
     }
 }
 input.onButtonPressed(Button.AB, function () {
-    awry()
+	
 })
 input.onButtonPressed(Button.B, function () {
-    NLeft()
+	
 })
 function Right () {
     pins.servoWritePin(AnalogPin.P16, 180)
     pins.servoWritePin(AnalogPin.P15, 180)
+}
+function Catch () {
+    pins.servoWritePin(AnalogPin.P14, 180)
 }
 function Stop () {
     pins.servoWritePin(AnalogPin.P15, 90)
@@ -129,8 +135,10 @@ function Backward () {
     pins.servoWritePin(AnalogPin.P15, 180)
 }
 let event = 0
-pins.digitalWritePin(DigitalPin.P15, 0)
+event = 0
+pins.digitalWritePin(DigitalPin.P14, 0)
 pins.digitalWritePin(DigitalPin.P16, 0)
+pins.digitalWritePin(DigitalPin.P13, 0)
 basic.forever(function () {
-    Driver()
+	
 })

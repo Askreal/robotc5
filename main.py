@@ -37,32 +37,33 @@ def NLeft():
     awry()
 def Activate(num: number):
     if num == 1:
+        basic.show_number(num)
         NLeft()
         awry()
     elif num == 2:
-        basic.show_icon(IconNames.HEART)
+        basic.show_number(num)
     elif num == 3:
-        basic.show_icon(IconNames.HEART)
+        basic.show_number(num)
     elif num == 4:
-        basic.show_icon(IconNames.HEART)
+        basic.show_number(num)
     elif num == 5:
-        basic.show_icon(IconNames.HEART)
+        basic.show_number(num)
     elif num == 6:
-        basic.show_icon(IconNames.HEART)
+        basic.show_number(num)
     elif num == 7:
-        basic.show_icon(IconNames.HEART)
+        basic.show_number(num)
     elif num == 8:
-        basic.show_icon(IconNames.HEART)
+        basic.show_number(num)
     elif num == 9:
-        basic.show_icon(IconNames.HEART)
+        basic.show_number(num)
     elif num == 10:
-        basic.show_icon(IconNames.HEART)
+        basic.show_number(num)
     elif num == 11:
-        basic.show_icon(IconNames.HEART)
+        basic.show_number(num)
     elif num == 12:
-        basic.show_icon(IconNames.HEART)
+        basic.show_number(num)
     else:
-        basic.show_icon(IconNames.HEART)
+        basic.show_number(num)
 def awry():
     if pins.digital_read_pin(DigitalPin.P1) == 1 and pins.digital_read_pin(DigitalPin.P8) == 0:
         basic.show_icon(IconNames.ASLEEP)
@@ -80,6 +81,7 @@ def awry():
         return 0
     return 0
 def Driver():
+    global event
     if pins.digital_read_pin(DigitalPin.P1) == 0 and pins.digital_read_pin(DigitalPin.P8) == 0:
         Forward()
     elif pins.digital_read_pin(DigitalPin.P1) == 1 and pins.digital_read_pin(DigitalPin.P8) == 0:
@@ -93,8 +95,8 @@ def Driver():
     elif pins.digital_read_pin(DigitalPin.P1) == 1 and pins.digital_read_pin(DigitalPin.P8) == 1:
         Stop()
         basic.pause(1000)
-        event2 = event2 + 1
-        Activate(event2)
+        event = event + 1
+        Activate(event)
 
 def on_button_pressed_ab():
     awry()
@@ -113,7 +115,7 @@ def Stop():
 def Backward():
     pins.servo_write_pin(AnalogPin.P16, 0)
     pins.servo_write_pin(AnalogPin.P15, 180)
-    
+event = 0
 event = 0
 pins.digital_write_pin(DigitalPin.P15, 0)
 pins.digital_write_pin(DigitalPin.P16, 0)
