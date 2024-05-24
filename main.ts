@@ -1,49 +1,23 @@
-function NLeft2 () {
-    Forward()
-    basic.pause(500)
-    Stop()
-    basic.pause(100)
-    while (pins.digitalReadPin(DigitalPin.P1) == 0) {
-        Left()
-    }
-    Stop()
-    basic.pause(100)
-    while (pins.digitalReadPin(DigitalPin.P1) == 1) {
-        Left()
-    }
-    Stop()
-    while (pins.digitalReadPin(DigitalPin.P1) == 1) {
-        Left()
-    }
-}
 function Left () {
-    pins.servoWritePin(AnalogPin.P16, 0)
-    pins.servoWritePin(AnalogPin.P15, 0)
-}
-function shutdown_test () {
-    sensors.DDMmotor(
-    AnalogPin.P15,
-    0,
-    AnalogPin.P16,
-    0
-    )
+    pins.servoWritePin(AnalogPin.P16, 180)
+    pins.servoWritePin(AnalogPin.P15, 180)
 }
 function Forward () {
-    pins.servoWritePin(AnalogPin.P15, 180)
-    pins.servoWritePin(AnalogPin.P16, 0)
+    pins.servoWritePin(AnalogPin.P15, 10)
+    pins.servoWritePin(AnalogPin.P16, 180)
 }
 function UnCatch () {
     pins.servoWritePin(AnalogPin.P14, 0)
 }
 function NRigth () {
     Forward()
-    basic.pause(1800)
+    basic.pause(1000)
+    Stop()
+    Right()
+    basic.pause(1000)
     Stop()
     awry()
-    basic.pause(1800)
-    Right()
-    basic.pause(1800)
-    Stop()
+    basic.pause(1500)
 }
 input.onButtonPressed(Button.A, function () {
     basic.showLeds(`
@@ -57,71 +31,48 @@ input.onButtonPressed(Button.A, function () {
 })
 function NLeft () {
     Forward()
-    basic.pause(1800)
+    basic.pause(1000)
+    Stop()
+    Left()
+    basic.pause(1000)
     Stop()
     awry()
-    basic.pause(1800)
-    Left()
-    basic.pause(1800)
-    Stop()
-}
-function ULeft () {
-    Catch()
-    basic.pause(1800)
-    Stop()
-    basic.pause(1800)
-    Left()
-    basic.pause(3600)
-    Stop()
+    basic.pause(1500)
 }
 function Activate (num: number) {
-    if (num == 4 && state == 1) {
-        NLeft()
-    } else if (num == 4 && state == 2) {
-        Forward()
-    } else if (num == 4 && state == 3) {
-        NRigth()
-    } else if (num == 5) {
+    if (num == 1) {
         Stop()
+        basic.pause(500)
+        NLeft()
+        Stop()
+    } else if (num == 2) {
+        Stop()
+        basic.pause(500)
+        NRigth()
+        Stop()
+        Forward()
+        basic.pause(500)
+    } else if (num == 3) {
+        Forward()
     }
-}
-function UnCatch_test () {
-    sensors.DDMmotor(
-    AnalogPin.P15,
-    1,
-    AnalogPin.P16,
-    255
-    )
 }
 function shutdown () {
     pins.servoWritePin(AnalogPin.P14, 90)
 }
-function Catch_test () {
-    sensors.DDMmotor(
-    AnalogPin.P15,
-    0,
-    AnalogPin.P16,
-    255
-    )
-}
 function awry () {
     if (pins.digitalReadPin(DigitalPin.P1) == 1 && pins.digitalReadPin(DigitalPin.P8) == 0) {
-        basic.showIcon(IconNames.Asleep)
         while (pins.digitalReadPin(DigitalPin.P1) == 1 && pins.digitalReadPin(DigitalPin.P8) == 0) {
-            Left()
-            basic.pause(200)
+            Right()
+            basic.pause(150)
         }
         Stop()
-        basic.showIcon(IconNames.Duck)
         return 0
     } else if (pins.digitalReadPin(DigitalPin.P1) == 0 && pins.digitalReadPin(DigitalPin.P8) == 1) {
-        basic.showIcon(IconNames.Butterfly)
         while (pins.digitalReadPin(DigitalPin.P1) == 0 && pins.digitalReadPin(DigitalPin.P8) == 1) {
-            Right()
-            basic.pause(200)
+            Left()
+            basic.pause(150)
         }
         Stop()
-        basic.showIcon(IconNames.Duck)
         return 0
     }
     return 0
@@ -131,17 +82,24 @@ function Driver () {
         Forward()
     } else if (pins.digitalReadPin(DigitalPin.P1) == 1 && pins.digitalReadPin(DigitalPin.P8) == 0) {
         Stop()
-        basic.pause(1000)
+        basic.pause(200)
         awry()
     } else if (pins.digitalReadPin(DigitalPin.P1) == 0 && pins.digitalReadPin(DigitalPin.P8) == 1) {
         Stop()
-        basic.pause(1000)
+        basic.pause(200)
         awry()
     } else if (pins.digitalReadPin(DigitalPin.P1) == 1 && pins.digitalReadPin(DigitalPin.P8) == 1) {
         Stop()
-        basic.pause(1000)
+        basic.pause(200)
         event = event + 1
-        Activate(event)
+        if (event == 4) {
+            Activate(state)
+        } else if (event == 5) {
+            Stop()
+        } else if (event < 4) {
+            Forward()
+            basic.pause(500)
+        }
     }
 }
 input.onButtonPressed(Button.AB, function () {
@@ -165,8 +123,8 @@ input.onButtonPressed(Button.B, function () {
     state = 2
 })
 function Right () {
-    pins.servoWritePin(AnalogPin.P16, 180)
-    pins.servoWritePin(AnalogPin.P15, 180)
+    pins.servoWritePin(AnalogPin.P16, 0)
+    pins.servoWritePin(AnalogPin.P15, 0)
 }
 function Catch () {
     pins.servoWritePin(AnalogPin.P14, 180)
@@ -176,8 +134,8 @@ function Stop () {
     pins.servoWritePin(AnalogPin.P16, 90)
 }
 function Backward () {
-    pins.servoWritePin(AnalogPin.P16, 0)
-    pins.servoWritePin(AnalogPin.P15, 180)
+    pins.servoWritePin(AnalogPin.P16, 180)
+    pins.servoWritePin(AnalogPin.P15, 0)
 }
 let state = 0
 let event = 0
@@ -186,11 +144,17 @@ state = 0
 pins.digitalWritePin(DigitalPin.P14, 0)
 pins.digitalWritePin(DigitalPin.P16, 0)
 pins.digitalWritePin(DigitalPin.P15, 0)
-basic.pause(5000)
+basic.pause(2000)
 basic.forever(function () {
     if (state == 0) {
         basic.showIcon(IconNames.Asleep)
     } else {
-        Driver()
+        if (event >= 5) {
+            basic.showNumber(event)
+            Stop()
+            basic.showIcon(IconNames.Angry)
+        } else {
+            Driver()
+        }
     }
 })
