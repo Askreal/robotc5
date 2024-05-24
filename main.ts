@@ -182,10 +182,15 @@ function Backward () {
 let state = 0
 let event = 0
 event = 0
+state = 0
 pins.digitalWritePin(DigitalPin.P14, 0)
 pins.digitalWritePin(DigitalPin.P16, 0)
 pins.digitalWritePin(DigitalPin.P15, 0)
 basic.pause(5000)
 basic.forever(function () {
-    Driver()
+    if (state == 0) {
+        basic.showIcon(IconNames.Asleep)
+    } else {
+        Driver()
+    }
 })
