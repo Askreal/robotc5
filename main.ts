@@ -35,8 +35,25 @@ function Forward () {
 function UnCatch () {
     pins.servoWritePin(AnalogPin.P14, 0)
 }
+function NRigth () {
+    Forward()
+    basic.pause(1800)
+    Stop()
+    awry()
+    basic.pause(1800)
+    Right()
+    basic.pause(1800)
+    Stop()
+}
 input.onButtonPressed(Button.A, function () {
-    Catch()
+    basic.showLeds(`
+        . . . . .
+        . # . . .
+        # # # # #
+        . # . . .
+        . . . . .
+        `)
+    state = 1
 })
 function NLeft () {
     Forward()
@@ -58,37 +75,14 @@ function ULeft () {
     Stop()
 }
 function Activate (num: number) {
-    if (num == 1) {
-        basic.showNumber(num)
+    if (num == 4 && state == 1) {
         NLeft()
-        awry()
-    } else if (num == 2) {
-        basic.showNumber(num)
-        Catch_test()
-        ULeft()
-        awry()
-    } else if (num == 3) {
-        basic.showNumber(num)
-    } else if (num == 4) {
-        basic.showNumber(num)
+    } else if (num == 4 && state == 2) {
+        Forward()
+    } else if (num == 4 && state == 3) {
+        NRigth()
     } else if (num == 5) {
-        basic.showNumber(num)
-    } else if (num == 6) {
-        basic.showNumber(num)
-    } else if (num == 7) {
-        basic.showNumber(num)
-    } else if (num == 8) {
-        basic.showNumber(num)
-    } else if (num == 9) {
-        basic.showNumber(num)
-    } else if (num == 10) {
-        basic.showNumber(num)
-    } else if (num == 11) {
-        basic.showNumber(num)
-    } else if (num == 12) {
-        basic.showNumber(num)
-    } else {
-        basic.showNumber(num)
+        Stop()
     }
 }
 function UnCatch_test () {
@@ -151,10 +145,24 @@ function Driver () {
     }
 }
 input.onButtonPressed(Button.AB, function () {
-    shutdown()
+    basic.showLeds(`
+        . . # . .
+        . # # # .
+        . . # . .
+        . . # . .
+        . . # . .
+        `)
+    state = 3
 })
 input.onButtonPressed(Button.B, function () {
-    UnCatch()
+    basic.showLeds(`
+        . . . . .
+        . . . # .
+        # # # # #
+        . . . # .
+        . . . . .
+        `)
+    state = 2
 })
 function Right () {
     pins.servoWritePin(AnalogPin.P16, 180)
@@ -171,11 +179,13 @@ function Backward () {
     pins.servoWritePin(AnalogPin.P16, 0)
     pins.servoWritePin(AnalogPin.P15, 180)
 }
+let state = 0
 let event = 0
 event = 0
 pins.digitalWritePin(DigitalPin.P14, 0)
 pins.digitalWritePin(DigitalPin.P16, 0)
 pins.digitalWritePin(DigitalPin.P15, 0)
+basic.pause(5000)
 basic.forever(function () {
     Driver()
 })
